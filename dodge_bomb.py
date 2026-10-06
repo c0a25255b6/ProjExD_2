@@ -30,22 +30,29 @@ def check_bound(rect: pg.Rect) -> tuple[bool,bool]:
     return yoko,tate
 
 def gameover(screen: pg.Surface) -> None:
+        """""
+            引数：黒の図形のSurface、こうかとんの画像のkoukatonSurface
+            5秒後実行が終わる
+            """""
         Surface = pg.Surface((WIDTH,HEIGHT))
-        pg.draw.rect(Surface,(0,0,0),(0,0,800,600))
-        Surface.get_alpha()
-        Surface.set_alpha(200)
+        pg.draw.rect(Surface,(0,0,0),(0,0,800,600)) #黒い短形を描画する
+        Surface.get_alpha() #不透明度を取得する
+        Surface.set_alpha(200) #透明度を設定する
 
-        fonto = pg.font.Font(None, 80)
-        txt =fonto.render("Game Over",True,(255,255,255))
-        koukatonSurface = pg.image.load("fig/8.png")
-        screen.blit(Surface,[0,0])
-        screen.blit(txt,[400,280])
+        fonto = pg.font.Font(None, 80) 
+        txt =fonto.render("Game Over",True,(255,255,255)) #フォントを作る
+        
+        koukatonSurface = pg.image.load("fig/8.png") #画像をロードする
+
+        screen.blit(Surface,[0,0]) #画像のblit
+        screen.blit(txt,[400,280]) #テキストのblit
         screen.blit(koukatonSurface,[330,270])#文字の左側にこうかとん
         screen.blit(koukatonSurface,[730,270])#文字の右側にこうかとん
         
         pg.display.update()
         time.sleep(5)
-        return
+        
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
