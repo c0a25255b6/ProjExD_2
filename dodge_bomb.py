@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame as pg
+import random 
 
 
 WIDTH, HEIGHT = 1100, 650
@@ -8,7 +9,7 @@ DELTA = {
     pg.K_UP:(0,-5),
     pg.K_DOWN:(0,+5),
     pg.K_RIGHT:(+5,0), 
-     pg.K_LEFT:(-5,0)  
+    pg.K_LEFT:(-5,0)  
 }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,6 +21,13 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
+    bb_img = pg.Surface((20,20)) 
+    pg.draw.circle(bb_img,(255,0,0),(10,10), 10) #赤い爆弾
+    bb_img.set_colorkey((0,0,0)) #四隅の黒い部分を透過する
+    bb_rct = bb_img.get_rect()
+    bb_rct.centerx = random.randint(0,WIDTH) #横方向の乱数
+    bb_rct.centery = random.randint(0,HEIGHT) #縦方向の乱数
+    vx,vy = +5,+5
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -44,7 +52,9 @@ def main():
                 sum_mv[1] += tpl[1] #縦方向移動量
 
         kk_rct.move_ip(sum_mv)
-        screen.blit(kk_img, kk_rct)
+        bb_rct.move_ip(vx,vy) #練習２：爆弾動く
+        screen.blit(kk_img, kk_rct) #練習２：爆弾表示
+        screen.blit(bb_img, bb_rct) #練習２：爆弾
         pg.display.update()
         tmr += 1
         clock.tick(50)
